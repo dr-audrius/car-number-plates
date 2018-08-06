@@ -1,0 +1,60 @@
+<div class="page-data">
+
+    <p cellpadding="11" class="label">Please enter following data:</p>
+
+    <form method="post" name="addForm">
+        <table>
+            <tr>
+                <td class="label">Name</td>
+                <td>:
+                    <input type="text" name="name" ng-pattern="/^[a-zA-Z\s]*$/" ng-model="owner.name" minlength="3" maxlength="20" required>
+                </td>
+                <td>
+                    <div ng-messages="addForm.name.$error" ng-if="addForm.name.$dirty">
+                        <div ng-message="required">Please enter your name</div>
+                        <div ng-message="minlength">At least 3 symbols</div>
+                        <div ng-message="maxlength">Entry is too long</div>
+                        <div ng-message="pattern">Only letters, please</div>
+                        <div ng-message="usernameAvailable">The name entered has already been registered</div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="label">Surname</td>
+                <td>:
+                    <input type="text" name="surname" ng-pattern="/^[a-zA-Z\s]*$/" ng-model="owner.surname" minlength="3" maxlength="20" required>
+                </td>
+                <td>
+                    <div ng-messages="addForm.surname.$error" ng-if="addForm.surname.$dirty">
+                        <div ng-message="required">Please enter your surname</div>
+                        <div ng-message="minlength">At least 3 symbols</div>
+                        <div ng-message="maxlength">Entry is too long</div>
+                        <div ng-message="pattern">Only letters, please</div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="label">Plate ID</td>
+                <td>:
+                    <input type="text" name="plateid" ng-pattern="/^[a-zA-Z]{3}[0-9]{3}$/" ng-model="owner.plateid" ng-change="checkCustomer(owner.plateid)" required>
+                </td>
+                <td>
+                    <div ng-messages="addForm.plateid.$error" ng-if="addForm.plateid.$dirty">
+                        <div ng-message="required">Please enter your name</div>
+                        <div ng-message="pattern">Please use format as follows: ABC123</div>
+                    </div>
+                    <div ng-show="occupied">Plate ID occupied, choose another ID</div>
+                </td>   
+            </tr>
+            
+            <tr>
+                <td class="label"></td>
+                <td>
+                    &nbsp;
+                    <input type="submit" value="Save" ng-disabled="!owner.name || addForm.name.$invalid || !owner.surname || addForm.surname.$invalid || !owner.plateid || addForm.plateid.$invalid || occupied"
+                        ng-click="addCustomers(owner)">
+                    <input type="button" name="cancel" value="Cancel" class="cancel" ng-click="cancelAdd()">
+                </td>
+            </tr>
+        </table>
+    </form>
